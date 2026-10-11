@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markorð: 171 - 180 algengustu í íslenskum námsbókum</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background-color: #f0f4f8; 
+            margin: 0;
+            padding: 2vh 5vw; 
+            min-height: 95vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+            background: white; 
+            padding: 30px 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            max-height: 100%;
+            overflow-y: auto;
+        }
+        h1 {
+            color: #1a73e8;
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        /* Framvindustika */
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            height: 20px;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #34a853;
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        #counter { font-size: 1.2em; color: #666; font-weight: bold; margin-bottom: 10px; }
+
+        .lang-selector {
+            margin-bottom: 20px;
+            background: #fff3e0;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: inline-block;
+            border: 1px solid #ffcc80;
+        }
+
+        .lang-selector select {
+            padding: 8px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            margin-left: 10px;
+            max-width: 300px;
+        }
+        
+        #target { 
+            font-size: 4em; 
+            margin: 10px 0; 
+            color: #222; 
+            font-weight: bold;
+        }
+        
+        #is-explanation {
+            font-size: 1.2em;
+            color: #333;
+            background-color: #e8f0fe;
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 20px;
+            max-width: 80%;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .btn { 
+            padding: 12px 25px; 
+            font-size: 1.2em; 
+            margin: 5px; 
+            cursor: pointer; 
+            border: none; 
+            border-radius: 8px; 
+            background-color: #1a73e8; 
+            color: white; 
+            transition: 0.3s; 
+            font-weight: bold;
+        }
+        .btn:hover:not(:disabled) { background-color: #1557b0; transform: scale(1.02); }
+        .recording { background-color: #d93025; animation: pulse 1.5s infinite; }
+        .recording:hover { background-color: #b3140b; }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        #media-box { 
+            font-size: 1.1em; 
+            color: #444; 
+            text-align: left; 
+            background: #f8fbff; 
+            padding: 15px 30px; 
+            border-radius: 12px; 
+            line-height: 1.6; 
+            border-left: 6px solid #1a73e8; 
+            margin-top: 15px;
+            display: inline-block;
+            min-width: 70%;
+        }
+        #spoken {
+            margin-top: 15px; 
+            font-size: 1.4em;
+            font-style: italic; 
+            color: #555;
+        }
+        #result {
+            font-weight: bold; 
+            font-size: 1.8em; 
+            margin-top: 5px; 
+            color: #1a73e8;
+        }
+        .nav-btns { margin-top: 20px; }
+        
+        /* Fyrir nafnainnslátt */
+        #studentName {
+            font-size: 1.5em;
+            padding: 10px;
+            margin: 20px 0;
+            width: 80%;
+            max-width: 400px;
+            border: 2px solid #1a73e8;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feedback-note {
+            margin-top: 40px;
+            font-size: 0.95em;
+            color: #555;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        .feedback-note a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .feedback-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <h1>Markorð: 171 - 180 algengustu í íslenskum námsbókum</h1>
+    
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <div class="lang-selector">
+        <label for="languageSelect"><b>🌍 Tungumál:</b></label>
+        <select id="languageSelect" onchange="updateUI()">
+            <option value="" selected disabled>Veldu tungumál...</option>
+            <option value="ar">Arabíska – العربية</option>
+            <option value="be">Belgíska (Flæmska) – Vlaams</option>
+            <option value="da">Danska – Dansk</option>
+            <option value="en">Enska – English</option>
+            <option value="tl">Filippseyska – Tagalog</option>
+            <option value="fi">Finnska – Suomi</option>
+            <option value="fr">Franska – Français</option>
+            <option value="fo">Færeyska – Føroyskt</option>
+            <option value="kl">Grænlenska – Kalaallisut</option>
+            <option value="nl">Hollenska – Nederlands</option>
+            <option value="it">Ítalska – Italiano</option>
+            <option value="ja">Japanska – 日本語</option>
+            <option value="zh">Kínverska – 中文</option>
+            <option value="ku">Kúrdíska – Kurdî</option>
+            <option value="lv">Lettneska – Latviešu</option>
+            <option value="lt">Litháíska – Lietuvių</option>
+            <option value="no">Norska – Norsk</option>
+            <option value="fa">Persneska – فارسی</option>
+            <option value="pt">Portúgalska – Português</option>
+            <option value="pl">Pólska – Polski</option>
+            <option value="ro">Rúmenska – Română</option>
+            <option value="ru">Rússneska – Русский</option>
+            <option value="es">Spænska – Español</option>
+            <option value="sv">Sænska – Svenska</option>
+            <option value="th">Tælenska – ภาษาไทย</option>
+            <option value="de">Þýska – Deutsch</option>
+            <option value="uk">Úkraínska – Українська</option>
+            <option value="vi">Víetnamska – Tiếng Việt</option>
+        </select>
+    </div>
+
+    <div id="counter"></div>
+    
+    <div id="target"></div>
+    <div id="is-explanation"></div>
+    <br>
+    <button id="record-btn" class="btn" onclick="toggleRecord()">🎤 Tala</button>
+    
+    <div id="spoken"></div>
+    <div id="result"></div>
+
+    <div id="media-box"><i>Veldu tungumál úr listanum að ofan til að sjá þýðingu.</i></div>
+
+    <div class="nav-btns">
+        <button class="btn" style="background-color: #5f6368;" onclick="prevExercise()">⬅️ Fyrri</button>
+        <button class="btn" style="background-color: #5f6368;" onclick="nextExercise()">Næsta ➡️</button>
+    </div>
+
+    <div class="feedback-note">
+        Vinsamlegast sendið ábendingar á <a href="mailto:dgu@fb.is">dgu@fb.is</a>
+    </div>
+</div>
+
+<script>
+const exerciseData = [
+    { 
+        text: "ár", 
+        is_exp: "<b>Útskýring:</b> (Nafnorð) Tímabil sem er 365 dagar (eða 12 mánuðir). Getur líka þýtt rennandi vatn, en er oftast notað sem tímabil.<br><br><b>Dæmi 1:</b> Við óskum ykkur gleðilegs <b>árs</b>!<br><b>Dæmi 2:</b> Ég bjó þar í eitt <b>ár</b>.",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (اسم) فترة زمنية تتكون من 365 يوماً (سنة).<br><b>مثال 1:</b> نتمنى لكم <b>سنة</b> سعيدة!<br><b>مثال 2:</b> عشت هناك لمدة <b>سنة</b> واحدة.</div>",
+            "da": "<b>Forklaring:</b> (Navneord) En periode på 365 dage (år).<br><b>Eksempel 1:</b> Vi ønsker jer et godt <b>år</b>!<br><b>Eksempel 2:</b> Jeg boede der i et <b>år</b>.",
+            "en": "<b>Explanation:</b> (Noun) A period of 365 days (year).<br><b>Example 1:</b> We wish you a happy new <b>year</b>!<br><b>Example 2:</b> I lived there for one <b>year</b>.",
+            "tl": "<b>Paliwanag:</b> (Pangngalan) Panahon ng 365 araw (taon).<br><b>Halimbawa 1:</b> Nais namin sa inyo ang isang masayang bagong <b>taon</b>!<br><b>Halimbawa 2:</b> Tumira ako roon ng isang <b>taon</b>.",
+            "pl": "<b>Wyjaśnienie:</b> (Rzeczownik) Okres 365 dni (rok).<br><b>Przykład 1:</b> Życzymy szczęśliwego nowego <b>roku</b>!<br><b>Przykład 2:</b> Mieszkałem tam przez jeden <b>rok</b>.",
+            "es": "<b>Explicación:</b> (Sustantivo) Un período de 365 días (año).<br><b>Ejemplo 1:</b> ¡Les deseamos un feliz <b>año</b>!<br><b>Ejemplo 2:</b> Viví allí por un <b>año</b>.",
+            "uk": "<b>Пояснення:</b> (Іменник) Період у 365 днів (рік).<br><b>Приклад 1:</b> Бажаємо щасливого нового <b>року</b>!<br><b>Приклад 2:</b> Я жив там один <b>рік</b>.",
+            "vi": "<b>Giải thích:</b> (Danh từ) Một khoảng thời gian 365 ngày (năm).<br><b>Ví dụ 1:</b> Chúc bạn một <b>năm</b> mới hạnh phúc!<br><b>Ví dụ 2:</b> Tôi đã sống ở đó một <b>năm</b>."
+        }
+    },
+    { 
+        text: "fleiri", 
+        is_exp: "<b>Útskýring:</b> (Lýsingarorð / Óákveðið fornafn) Miðstig af 'margir'. Þýðir að fjöldinn er meiri.<br><b>Andheiti:</b> færri.<br><br><b>Dæmi 1:</b> Það voru <b>fleiri</b> þar en ég bjóst við.<br><b>Dæmi 2:</b> Eru <b>fleiri</b> spurningar?",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (صفة) صيغة التفضيل من 'كثير' (أكثر/عدد أكبر).<br><b>مثال 1:</b> كان هناك أشخاص <b>أكثر</b> مما توقعت.<br><b>مثال 2:</b> هل هناك <b>المزيد</b> من الأسئلة؟</div>",
+            "da": "<b>Forklaring:</b> (Tillægsord) Komparativ af 'mange' (flere).<br><b>Eksempel 1:</b> Der var <b>flere</b> der, end jeg forventede.<br><b>Eksempel 2:</b> Er der <b>flere</b> spørgsmål?",
+            "en": "<b>Explanation:</b> (Adjective / Pronoun) Comparative of 'many' (more). Means a larger number.<br><b>Example 1:</b> There were <b>more</b> people there than I expected.<br><b>Example 2:</b> Are there <b>any more</b> questions?",
+            "tl": "<b>Paliwanag:</b> Comparative ng 'marami' (mas marami).<br><b>Halimbawa 1:</b> Mayroong <b>mas maraming</b> tao roon kaysa sa inaasahan ko.<br><b>Halimbawa 2:</b> Mayroon pa bang <b>iba pang</b> katanungan?",
+            "pl": "<b>Wyjaśnienie:</b> (Przymiotnik) Stopień wyższy od 'wielu' (więcej/więksi).<br><b>Przykład 1:</b> Było tam <b>więcej</b> osób, niż się spodziewałem.<br><b>Przykład 2:</b> Czy są <b>jeszcze jakieś (więcej)</b> pytania?",
+            "es": "<b>Explicación:</b> (Adjetivo / Pronombre) Comparativo de 'muchos' (más).<br><b>Ejemplo 1:</b> Había <b>más</b> personas de las que esperaba.<br><b>Ejemplo 2:</b> ¿Hay <b>más</b> preguntas?",
+            "uk": "<b>Пояснення:</b> (Прикметник) Вищий ступінь від 'багато' (більше).<br><b>Приклад 1:</b> Там було <b>більше</b> людей, ніж я очікував.<br><b>Приклад 2:</b> Є <b>ще (більше)</b> запитання?",
+            "vi": "<b>Giải thích:</b> So sánh hơn của 'nhiều' (nhiều hơn - dùng cho đếm được).<br><b>Ví dụ 1:</b> Có <b>nhiều</b> người ở đó hơn tôi mong đợi.<br><b>Ví dụ 2:</b> Còn <b>thêm</b> câu hỏi nào không?"
+        }
+    },
+    { 
+        text: "áhrif", 
+        is_exp: "<b>Útskýring:</b> (Nafnorð) Þegar eitthvað breytir eða verkar á eitthvað annað. Að 'hafa áhrif á eitthvað' (hvorugkyn fleirtala).<br><br><b>Dæmi 1:</b> Veðrið hefur mikil <b>áhrif</b> á skapið mitt.<br><b>Dæmi 2:</b> Lyfið hafði engin <b>áhrif</b> á sjúkdóminn.",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (اسم) عندما يغير شيء ما شيئاً آخر (تأثير).<br><b>مثال 1:</b> الطقس له <b>تأثير</b> كبير على مزاجي.<br><b>مثال 2:</b> لم يكن للدواء أي <b>تأثير</b> على المرض.</div>",
+            "da": "<b>Forklaring:</b> (Navneord) Når noget ændrer eller virker på noget andet (effekt/indflydelse).<br><b>Eksempel 1:</b> Vejret har stor <b>indflydelse</b> på mit humør.<br><b>Eksempel 2:</b> Medicinen havde ingen <b>effekt</b>.",
+            "en": "<b>Explanation:</b> (Noun) When something changes or acts upon something else (effect/influence/impact).<br><b>Example 1:</b> The weather has a big <b>effect</b> on my mood.<br><b>Example 2:</b> The medicine had no <b>effect</b> on the disease.",
+            "tl": "<b>Paliwanag:</b> (Pangngalan) Epekto o impluwensya.<br><b>Halimbawa 1:</b> Malaki ang <b>epekto</b> ng panahon sa aking mood.<br><b>Halimbawa 2:</b> Walang <b>epekto</b> ang gamot sa sakit.",
+            "pl": "<b>Wyjaśnienie:</b> (Rzeczownik) Kiedy coś zmienia lub działa na coś innego (wpływ/efekt).<br><b>Przykład 1:</b> Pogoda ma duży <b>wpływ</b> na mój nastrój.<br><b>Przykład 2:</b> Lekarstwo nie miało żadnego <b>efektu</b>.",
+            "es": "<b>Explicación:</b> (Sustantivo) Cuando algo cambia o actúa sobre otra cosa (efecto/influencia).<br><b>Ejemplo 1:</b> El clima tiene un gran <b>efecto</b> en mi estado de ánimo.<br><b>Ejemplo 2:</b> La medicina no tuvo <b>efecto</b> sobre la enfermedad.",
+            "uk": "<b>Пояснення:</b> (Іменник) Коли щось змінює або діє на інше (вплив/ефект).<br><b>Приклад 1:</b> Погода має великий <b>вплив</b> на мій настрій.<br><b>Приклад 2:</b> Ліки не мали жодного <b>ефекту</b>.",
+            "vi": "<b>Giải thích:</b> (Danh từ) Khi một cái gì đó thay đổi hoặc tác động lên cái gì khác (ảnh hưởng/tác dụng).<br><b>Ví dụ 1:</b> Thời tiết có <b>ảnh hưởng</b> lớn đến tâm trạng của tôi.<br><b>Ví dụ 2:</b> Thuốc không có <b>tác dụng</b> đối với bệnh."
+        }
+    },
+    { 
+        text: "orð", 
+        is_exp: "<b>Útskýring:</b> (Nafnorð) Grunneining í máli sem hefur merkingu. Sagt eða skrifað (hvorugkyn).<br><br><b>Dæmi 1:</b> Ég skil ekki þetta <b>orð</b>.<br><b>Dæmi 2:</b> Hann stóð við <b>orð</b> sín (stóð við það sem hann sagði).",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (اسم) وحدة أساسية في اللغة لها معنى (كلمة).<br><b>مثال 1:</b> أنا لا أفهم هذه <b>الكلمة</b>.<br><b>مثال 2:</b> التزم بـ <b>كلمته</b>.</div>",
+            "da": "<b>Forklaring:</b> (Navneord) Grundenhed i sproget (ord).<br><b>Eksempel 1:</b> Jeg forstår ikke dette <b>ord</b>.<br><b>Eksempel 2:</b> Han holdt sit <b>ord</b>.",
+            "en": "<b>Explanation:</b> (Noun) A basic unit of language that has meaning (word).<br><b>Example 1:</b> I do not understand this <b>word</b>.<br><b>Example 2:</b> He kept his <b>word</b> (kept his promise).",
+            "tl": "<b>Paliwanag:</b> (Pangngalan) Isang pangunahing yunit ng wika na may kahulugan (salita).<br><b>Halimbawa 1:</b> Hindi ko maintindihan ang <b>salita</b>ng ito.<br><b>Halimbawa 2:</b> Tinupad niya ang kanyang <b>salita</b>.",
+            "pl": "<b>Wyjaśnienie:</b> (Rzeczownik) Podstawowa jednostka języka mająca znaczenie (słowo).<br><b>Przykład 1:</b> Nie rozumiem tego <b>słowa</b>.<br><b>Przykład 2:</b> Dotrzymał <b>słowa</b>.",
+            "es": "<b>Explicación:</b> (Sustantivo) Unidad básica del lenguaje con significado (palabra).<br><b>Ejemplo 1:</b> No entiendo esta <b>palabra</b>.<br><b>Ejemplo 2:</b> Él mantuvo su <b>palabra</b> (cumplió su promesa).",
+            "uk": "<b>Пояснення:</b> (Іменник) Основна одиниця мови, що має значення (слово).<br><b>Приклад 1:</b> Я не розумію цього <b>слова</b>.<br><b>Приклад 2:</b> Він дотримав свого <b>слова</b>.",
+            "vi": "<b>Giải thích:</b> (Danh từ) Đơn vị cơ bản của ngôn ngữ có ý nghĩa (từ/lời nói).<br><b>Ví dụ 1:</b> Tôi không hiểu <b>từ</b> này.<br><b>Ví dụ 2:</b> Anh ấy đã giữ <b>lời</b>."
+        }
+    },
+    { 
+        text: "ein", 
+        is_exp: "<b>Útskýring:</b> (Töluorð / Fornafn) Kvenkyn af 'einn' eða fleirtala hvorugkyns. Þýðir eitthvað stakt, eða að vera algjörlega án annarra.<br><br><b>Dæmi 1:</b> Hún var alveg <b>ein</b> heima (engin önnur).<br><b>Dæmi 2:</b> Það er aðeins <b>ein</b> leið fær.",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (رقم / ضمير) صيغة المؤنث لـ 'واحد' أو 'وحيدة/وحدها'.<br><b>مثال 1:</b> كانت <b>وحدها</b> تماماً في المنزل.<br><b>مثال 2:</b> هناك طريقة <b>واحدة</b> فقط ممكنة.</div>",
+            "da": "<b>Forklaring:</b> (Talord) Hunkøn af 'en', eller at være alene.<br><b>Eksempel 1:</b> Hun var helt <b>alene</b> hjemme.<br><b>Eksempel 2:</b> Der er kun <b>én</b> mulig vej.",
+            "en": "<b>Explanation:</b> (Numeral / Pronoun) Feminine form of 'one', or meaning 'alone'.<br><b>Example 1:</b> She was completely <b>alone</b> at home.<br><b>Example 2:</b> There is only <b>one</b> way possible.",
+            "tl": "<b>Paliwanag:</b> Pambabaeng anyo ng 'isa', o nangangahulugang 'nag-iisa'.<br><b>Halimbawa 1:</b> Siya ay ganap na <b>nag-iisa</b> sa bahay.<br><b>Halimbawa 2:</b> Mayroon lamang <b>isang</b> paraan na posible.",
+            "pl": "<b>Wyjaśnienie:</b> (Liczebnik / Zaimek) Rodzaj żeński od 'jeden' (jedna) lub 'sama'.<br><b>Przykład 1:</b> Była w domu zupełnie <b>sama</b>.<br><b>Przykład 2:</b> Jest tylko <b>jedna</b> możliwa droga.",
+            "es": "<b>Explicación:</b> (Numeral) Forma femenina de 'uno' (una), o 'sola'.<br><b>Ejemplo 1:</b> Ella estaba completamente <b>sola</b> en casa.<br><b>Ejemplo 2:</b> Solo hay <b>una</b> forma posible.",
+            "uk": "<b>Пояснення:</b> Жіночий рід від 'один' (одна) або 'сама'.<br><b>Приклад 1:</b> Вона була вдома зовсім <b>сама</b>.<br><b>Приклад 2:</b> Є лише <b>один (одна)</b> можливий шлях.",
+            "vi": "<b>Giải thích:</b> Dạng giống cái của 'một', hoặc có nghĩa là 'một mình'.<br><b>Ví dụ 1:</b> Cô ấy hoàn toàn <b>một mình</b> ở nhà.<br><b>Ví dụ 2:</b> Chỉ có <b>một</b> con đường khả thi."
+        }
+    },
+    { 
+        text: "öll", 
+        is_exp: "<b>Útskýring:</b> (Óákveðið fornafn) Kvenkyn eintölu eða hvorugkyn fleirtölu af 'allur'. Vísar til heildar eða allra í ákveðnum hópi.<br><br><b>Dæmi 1:</b> Bókin er <b>öll</b> útkrotuð (kvenkyn eintala).<br><b>Dæmi 2:</b> Við fórum <b>öll</b> saman í bíó (hvorugkyn fleirtala).",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> يشير إلى الكل أو الجميع (حسب الجنس).<br><b>مثال 1:</b> الكتاب <b>كله</b> مشخبط.<br><b>مثال 2:</b> ذهبنا <b>جميعاً</b> إلى السينما معاً.</div>",
+            "da": "<b>Forklaring:</b> (Ubestemt stedord) Hunkøn ental eller intetkøn flertal af 'al/alle'.<br><b>Eksempel 1:</b> Bogen er <b>helt</b> overtegnet.<br><b>Eksempel 2:</b> Vi tog <b>alle</b> sammen i biografen.",
+            "en": "<b>Explanation:</b> (Indefinite pronoun) Feminine singular or neuter plural of 'all'. Refers to the entirety.<br><b>Example 1:</b> The book is <b>all</b> scribbled on.<br><b>Example 2:</b> We <b>all</b> went to the cinema together.",
+            "tl": "<b>Paliwanag:</b> Tumutukoy sa kabuuan (lahat).<br><b>Halimbawa 1:</b> Ang libro ay <b>puro (lahat)</b> sulat.<br><b>Halimbawa 2:</b> Tayong <b>lahat</b> ay pumunta sa sinehan nang magkasama.",
+            "pl": "<b>Wyjaśnienie:</b> (Zaimek nieokreślony) Rodzaj żeński liczby pojedynczej lub rodzaj nijaki l.mn. od 'cały/wszyscy'.<br><b>Przykład 1:</b> Książka jest <b>cała</b> pobazgrana.<br><b>Przykład 2:</b> My <b>wszyscy</b> poszliśmy razem do kina.",
+            "es": "<b>Explicación:</b> (Pronombre indefinido) Femenino singular o neutro plural de 'todo/todos'.<br><b>Ejemplo 1:</b> El libro está <b>todo</b> garabateado.<br><b>Ejemplo 2:</b> <b>Todos</b> fuimos juntos al cine.",
+            "uk": "<b>Пояснення:</b> Жіночий рід однини або середній рід множини від 'весь/всі'.<br><b>Приклад 1:</b> Книга <b>вся</b> пописана.<br><b>Приклад 2:</b> Ми <b>всі</b> разом пішли в кіно.",
+            "vi": "<b>Giải thích:</b> Chỉ toàn bộ hoặc tất cả mọi người.<br><b>Ví dụ 1:</b> Cuốn sách <b>toàn</b> vết viết bậy.<br><b>Ví dụ 2:</b> <b>Tất cả</b> chúng tôi cùng nhau đi xem phim."
+        }
+    },
+    { 
+        text: "jarðar", 
+        is_exp: "<b>Útskýring:</b> (Nafnorð) Eignarfall af orðinu 'jörð' (plánetan okkar, eða mold/landsvæði). Oft notað í samböndum eins og 'yfirborð jarðar'.<br><br><b>Dæmi 1:</b> Hún er fallegasta kona <b>jarðar</b> (á jörðinni).<br><b>Dæmi 2:</b> Þyngdarafl <b>jarðar</b> heldur okkur niðri.",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (اسم) حالة الإضافة لكلمة 'الأرض'.<br><b>مثال 1:</b> هي أجمل امرأة على وجه <b>الأرض</b>.<br><b>مثال 2:</b> جاذبية <b>الأرض</b> تبقينا على الأرض.</div>",
+            "da": "<b>Forklaring:</b> (Navneord) Ejefald af 'jord'.<br><b>Eksempel 1:</b> Hun er <b>jordens</b> smukkeste kvinde.<br><b>Eksempel 2:</b> <b>Jordens</b> tyngdekraft holder os nede.",
+            "en": "<b>Explanation:</b> (Noun) Genitive case of 'earth' (earth's / of the earth).<br><b>Example 1:</b> She is the most beautiful woman on <b>earth</b>.<br><b>Example 2:</b> The <b>earth's</b> gravity keeps us down.",
+            "tl": "<b>Paliwanag:</b> Genitive case ng 'mundo' o 'lupa' (ng mundo).<br><b>Halimbawa 1:</b> Siya ang pinakamagandang babae sa <b>mundo</b>.<br><b>Halimbawa 2:</b> Ang gravity <b>ng mundo</b> ang pumipigil sa atin sa ibaba.",
+            "pl": "<b>Wyjaśnienie:</b> (Rzeczownik) Dopełniacz od 'ziemia' (ziemi/ziemski).<br><b>Przykład 1:</b> Ona jest najpiękniejszą kobietą na <b>ziemi</b>.<br><b>Przykład 2:</b> Grawitacja <b>ziemi</b> trzyma nas w dole.",
+            "es": "<b>Explicación:</b> (Sustantivo) Caso genitivo de 'tierra' (de la tierra).<br><b>Ejemplo 1:</b> Ella es la mujer más bella de la <b>tierra</b>.<br><b>Ejemplo 2:</b> La gravedad <b>de la tierra</b> nos mantiene abajo.",
+            "uk": "<b>Пояснення:</b> (Іменник) Родовий відмінок від 'земля' (землі).<br><b>Приклад 1:</b> Вона найкрасивіша жінка на <b>землі</b>.<br><b>Приклад 2:</b> Гравітація <b>землі</b> утримує нас внизу.",
+            "vi": "<b>Giải thích:</b> (Danh từ) Sở hữu cách của 'trái đất' (của trái đất).<br><b>Ví dụ 1:</b> Cô ấy là người phụ nữ đẹp nhất trên <b>trái đất</b>.<br><b>Ví dụ 2:</b> Trọng lực <b>của trái đất</b> giữ chúng ta lại."
+        }
+    },
+    { 
+        text: "heim", 
+        is_exp: "<b>Útskýring:</b> (Atviksorð / Nafnorð) Þegar einhver fer á þann stað sem hann býr á (stefna). Einnig þolfall af 'heimur' (t.d. allan heim).<br><br><b>Dæmi 1:</b> Ég ætla að fara <b>heim</b> núna.<br><b>Dæmi 2:</b> Við hjóluðum alla leið <b>heim</b>.",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> (ظرف/اسم) الاتجاه نحو المنزل.<br><b>مثال 1:</b> سأذهب إلى <b>المنزل</b> الآن.<br><b>مثال 2:</b> ركبنا الدراجة طوال الطريق إلى <b>المنزل</b>.</div>",
+            "da": "<b>Forklaring:</b> (Biord) Retning mod ens hjem (hjem).<br><b>Eksempel 1:</b> Jeg tager <b>hjem</b> nu.<br><b>Eksempel 2:</b> Vi cyklede hele vejen <b>hjem</b>.",
+            "en": "<b>Explanation:</b> (Adverb / Noun) Direction towards one's house (home). Also accusative of 'world'.<br><b>Example 1:</b> I am going to go <b>home</b> now.<br><b>Example 2:</b> We cycled all the way <b>home</b>.",
+            "tl": "<b>Paliwanag:</b> Direksyon patungo sa bahay ng isa (pauwi).<br><b>Halimbawa 1:</b> UUwi na ako sa <b>bahay</b> ngayon.<br><b>Halimbawa 2:</b> Nagbisikleta kami buong daan <b>pauwi</b>.",
+            "pl": "<b>Wyjaśnienie:</b> (Przysłówek) Kierunek do domu (do domu).<br><b>Przykład 1:</b> Zamierzam iść teraz <b>do domu</b>.<br><b>Przykład 2:</b> Jechaliśmy rowerem całą drogę <b>do domu</b>.",
+            "es": "<b>Explicación:</b> (Adverbio) Dirección hacia la casa de uno (a casa).<br><b>Ejemplo 1:</b> Voy a ir <b>a casa</b> ahora.<br><b>Ejemplo 2:</b> Fuimos en bicicleta todo el camino <b>a casa</b>.",
+            "uk": "<b>Пояснення:</b> (Прислівник) Напрямок додому.<br><b>Приклад 1:</b> Я збираюся йти <b>додому</b> зараз.<br><b>Приклад 2:</b> Ми їхали на велосипеді всю дорогу <b>додому</b>.",
+            "vi": "<b>Giải thích:</b> Hướng về nhà (về nhà).<br><b>Ví dụ 1:</b> Bây giờ tôi sẽ <b>về nhà</b>.<br><b>Ví dụ 2:</b> Chúng tôi đạp xe suốt quãng đường <b>về nhà</b>."
+        }
+    },
+    { 
+        text: "ykkur", 
+        is_exp: "<b>Útskýring:</b> (Persónufornafn) Þolfall eða þágufall fleirtölu af 'þið' (2. persóna fleirtala). Vísar til þeirra sem talað er við (sem þolandi/þiggjandi).<br><br><b>Dæmi 1:</b> Hlakkar <b>ykkur</b> til jólanna?<br><b>Dæmi 2:</b> Ég ætla að hjálpa <b>ykkur</b> með þetta.",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> ضمير مفعول به للجمع المخاطب (لكم/إياكم).<br><b>مثال 1:</b> هل تتطلعون (يُسعد<b>كم</b>) لعيد الميلاد؟<br><b>مثال 2:</b> سأساعد<b>كم</b> في هذا.</div>",
+            "da": "<b>Forklaring:</b> (Personligt stedord) Akkusativ/Dativ flertal af 'I' (jer).<br><b>Eksempel 1:</b> Glæder <b>I (jer)</b> til jul?<br><b>Eksempel 2:</b> Jeg vil hjælpe <b>jer</b> med dette.",
+            "en": "<b>Explanation:</b> (Personal pronoun) Accusative/Dative plural of 'you' (you guys / you all).<br><b>Example 1:</b> Are <b>you (all)</b> looking forward to Christmas?<br><b>Example 2:</b> I am going to help <b>you (guys)</b> with this.",
+            "tl": "<b>Paliwanag:</b> Panghalip panao para sa marami (sa inyo / kayo).<br><b>Halimbawa 1:</b> Nasasabik ba <b>kayo</b> sa Pasko?<br><b>Halimbawa 2:</b> Tutulungan ko <b>kayo</b> rito.",
+            "pl": "<b>Wyjaśnienie:</b> (Zaimek osobowy) Biernik/Celownik liczby mnogiej od 'wy' (was/wam).<br><b>Przykład 1:</b> Czy nie możecie się (<b>wam</b>) doczekać Świąt?<br><b>Przykład 2:</b> Pomogę <b>wam</b> z tym.",
+            "es": "<b>Explicación:</b> (Pronombre personal) Acusativo/Dativo plural de 'tú' (os / a ustedes).<br><b>Ejemplo 1:</b> ¿<b>Os</b> hace ilusión la Navidad?<br><b>Ejemplo 2:</b> Voy a ayudar<b>os (a ustedes)</b> con esto.",
+            "uk": "<b>Пояснення:</b> Знахідний/Давальний відмінок множини від 'ви' (вас/вам).<br><b>Приклад 1:</b> <b>Вам</b> не терпиться до Різдва?<br><b>Приклад 2:</b> Я збираюся <b>вам</b> з цим допомогти.",
+            "vi": "<b>Giải thích:</b> (Đại từ nhân xưng) Các bạn/cho các bạn (làm tân ngữ).<br><b>Ví dụ 1:</b> <b>Các bạn</b> có mong chờ Giáng sinh không?<br><b>Ví dụ 2:</b> Tôi sẽ giúp <b>các bạn</b> việc này."
+        }
+    },
+    { 
+        text: "alla", 
+        is_exp: "<b>Útskýring:</b> (Óákveðið fornafn) Þolfall karlkyns fleirtölu, eða þolfall/eignarfall/þágufall kvenkyns eintölu af 'allur'.<br><br><b>Dæmi 1:</b> Ég bauð <b>alla</b> vinina velkomna (karlkyn fleirtala).<br><b>Dæmi 2:</b> Hún vann <b>alla</b> vikuna (kvenkyn eintala).",
+        translations: {
+            "ar": "<div dir='rtl'><b>الشرح:</b> حالة النصب لـ 'كل' أو 'جميع' (للمذكر الجمع أو المؤنث المفرد).<br><b>مثال 1:</b> رحبت بـ <b>جميع</b> الأصدقاء.<br><b>مثال 2:</b> عملت <b>طوال (كل)</b> الأسبوع.</div>",
+            "da": "<b>Forklaring:</b> (Ubestemt stedord) Akkusativ af 'al/alle'.<br><b>Eksempel 1:</b> Jeg bød <b>alle</b> vennerne velkommen.<br><b>Eksempel 2:</b> Hun arbejdede <b>hele</b> ugen.",
+            "en": "<b>Explanation:</b> (Indefinite pronoun) Accusative case of 'all' (all/everyone/the whole).<br><b>Example 1:</b> I welcomed <b>all</b> the friends.<br><b>Example 2:</b> She worked <b>all (the whole)</b> week.",
+            "tl": "<b>Paliwanag:</b> Accusative case ng 'lahat' o 'buo'.<br><b>Halimbawa 1:</b> Tinanggap ko ang <b>lahat</b> ng mga kaibigan.<br><b>Halimbawa 2:</b> Nagtrabaho siya nang <b>buong</b> linggo.",
+            "pl": "<b>Wyjaśnienie:</b> (Zaimek nieokreślony) Biernik od 'wszyscy/cały'.<br><b>Przykład 1:</b> Powitałem <b>wszystkich</b> przyjaciół.<br><b>Przykład 2:</b> Pracowała przez <b>cały</b> tydzień.",
+            "es": "<b>Explicación:</b> (Pronombre indefinido) Acusativo de 'todo/todos' (a todos / toda la).<br><b>Ejemplo 1:</b> Di la bienvenida a <b>todos</b> los amigos.<br><b>Ejemplo 2:</b> Ella trabajó <b>toda</b> la semana.",
+            "uk": "<b>Пояснення:</b> Знахідний відмінок від 'всі/весь'.<br><b>Приклад 1:</b> Я привітав <b>всіх</b> друзів.<br><b>Приклад 2:</b> Вона працювала <b>весь (цілий)</b> тиждень.",
+            "vi": "<b>Giải thích:</b> Cách đối của 'tất cả' hoặc 'toàn bộ'.<br><b>Ví dụ 1:</b> Tôi đã chào đón <b>tất cả</b> những người bạn.<br><b>Ví dụ 2:</b> Cô ấy đã làm việc <b>cả</b> tuần."
+        }
+    }
+];
+
+let userScores = new Array(exerciseData.length).fill(null);
+let userSpoken = new Array(exerciseData.length).fill("");
+
+let currentIndex = 0;
+let recognition;
+let isRecording = false;
+let autoAdvanceTimer = null;
+let hasDownloadedCert = false;
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.lang = 'is-IS';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    
+    recognition.onend = () => {
+        isRecording = false;
+        const btn = document.getElementById('record-btn');
+        if (btn) {
+            btn.innerText = "🎤 Tala";
+            btn.classList.remove('recording');
+        }
+        
+        const resDiv = document.getElementById('result');
+        if (resDiv && resDiv.innerText === "Hlusta...") {
+            resDiv.innerText = "";
+        }
+    };
+} else {
+    alert("Þessi vafri styður ekki talgreiningu. Notaðu Chrome eða Edge á tölvu.");
+}
+
+window.onload = () => { 
+    updateUI(); 
+};
+
+function updateProgress() {
+    let correctCount = 0;
+    for (let i = 0; i < userScores.length; i++) {
+        if (userScores[i] === 100) {
+            correctCount++;
+        }
+    }
+    const percent = (correctCount / exerciseData.length) * 100;
+    
+    const progressBar = document.getElementById('progress-bar');
+    if(progressBar) {
+        progressBar.style.width = percent + '%';
+    }
+    return correctCount;
+}
+
+function findNextUnfinished() {
+    for (let i = 0; i < userScores.length; i++) {
+        if (userScores[i] !== 100) {
+            currentIndex = i;
+            break;
+        }
+    }
+    
+    document.getElementById('app').innerHTML = `
+        <h1>Markorð: 171 - 180 algengustu í íslenskum námsbókum</h1>
+        <div class="progress-container"><div id="progress-bar"></div></div>
+        
+        <div class="lang-selector">
+            <label for="languageSelect"><b>🌍 Tungumál:</b></label>
+            <select id="languageSelect" onchange="updateUI()">
+                <option value="" selected disabled>Veldu tungumál...</option>
+                <option value="ar">Arabíska – العربية</option>
+                <option value="be">Belgíska (Flæmska) – Vlaams</option>
+                <option value="da">Danska – Dansk</option>
+                <option value="en">Enska – English</option>
+                <option value="tl">Filippseyska – Tagalog</option>
+                <option value="fi">Finnska – Suomi</option>
+                <option value="fr">Franska – Français</option>
+                <option value="fo">Færeyska – Føroyskt</option>
+                <option value="kl">Grænlenska – Kalaallisut</option>
+                <option value="nl">Hollenska – Nederlands</option>
+                <option value="it">Ítalska – Italiano</option>
+                <option value="ja">Japanska – 日本語</option>
+                <option value="zh">Kínverska – 中文</option>
+                <option value="ku">Kúrdíska – Kurdî</option>
+                <option value="lv">Lettneska – Latviešu</option>
+                <option value="lt">Litháíska – Lietuvių</option>
+                <option value="no">Norska – Norsk</option>
+                <option value="fa">Persneska – فارسی</option>
+                <option value="pt">Portúgalska – Português</option>
+                <option value="pl">Pólska – Polski</option>
+                <option value="ro">Rúmenska – Română</option>
+                <option value="ru">Rússneska – Русский</option>
+                <option value="es">Spænska – Español</option>
+                <option value="sv">Sænska – Svenska</option>
+                <option value="th">Tælenska – ภาษาไทย</option>
+                <option value="de">Þýska – Deutsch</option>
+                <option value="uk">Úkraínska – Українська</option>
+                <option value="vi">Víetnamska – Tiếng Việt</option>
+            </select>
+        </div>
+
+        <div id="counter"></div>
+        <div id="target"></div>
+        <div id="is-explanation"></div>
+        <br>
+        <button id="record-btn" class="btn" onclick="toggleRecord()">🎤 Tala</button>
+        <div id="spoken"></div>
+        <div id="result"></div>
+        <div id="media-box"></div>
+        <div class="nav-btns">
+            <button class="btn" style="background-color: #5f6368;" onclick="prevExercise()">⬅️ Fyrri</button>
+            <button class="btn" style="background-color: #5f6368;" onclick="nextExercise()">Næsta ➡️</button>
+        </div>
+        <div class="feedback-note">
+            Vinsamlegast sendið ábendingar á <a href="mailto:dgu@fb.is">dgu@fb.is</a>
+        </div>
+    `;
+    updateUI();
+}
+
+function updateUI() {
+    clearTimeout(autoAdvanceTimer); 
+    const correctCount = updateProgress();
+
+    if (currentIndex >= exerciseData.length) {
+        if (correctCount === exerciseData.length) {
+            document.getElementById('app').innerHTML = `
+                <div class="progress-container"><div id="progress-bar" style="width: 100%;"></div></div>
+                <h1 style="color: #34a853; font-size: 2.5em;">Frábært! Þú náðir 100% árangri! 🎉</h1>
+                <p style="font-size: 1.2em; color: #555;">Skrifaðu nafnið þitt hér að neðan til að sækja viðurkenningarskjalið þitt.</p>
+                <input type="text" id="studentName" placeholder="Skrifaðu nafnið þitt hér" autocomplete="off" ${hasDownloadedCert ? 'disabled' : ''}><br>
+                <button id="cert-btn" class="btn" style="background-color: ${hasDownloadedCert ? '#5f6368' : '#1a73e8'}; font-size: 1.5em; padding: 15px 30px; margin-top: 10px; cursor: ${hasDownloadedCert ? 'not-allowed' : 'pointer'}; opacity: ${hasDownloadedCert ? '0.7' : '1'};" onclick="downloadCert()" ${hasDownloadedCert ? 'disabled' : ''}>
+                    ${hasDownloadedCert ? '✅ Skjal sótt' : '🏆 Sækja viðurkenningarskjal'}
+                </button>
+                <br><br>
+                <button class="btn" style="background-color: #5f6368;" onclick="location.reload()">🔄 Byrja nýja umferð</button>
+                <div class="feedback-note">
+                    Vinsamlegast sendið ábendingar á <a href="mailto:dgu@fb.is">dgu@fb.is</a>
+                </div>
+            `;
+        } else {
+            document.getElementById('app').innerHTML = `
+                <div class="progress-container"><div id="progress-bar" style="width: ${(correctCount/exerciseData.length)*100}%;"></div></div>
+                <h1 style="color: #fbbc05; font-size: 2em;">Þú ert næstum því búin(n)!</h1>
+                <p style="font-size: 1.2em;">Þú hefur klárað ${correctCount} af${exerciseData.length} orðum með 100% árangri.</p>
+                <p style="font-size: 1.1em; color: #555;">Farðu til baka og reyndu aftur við þau orð sem vantaði upp á til að fá skjalið.</p>
+                <button class="btn" style="background-color: #fbbc05; color: #000;" onclick="findNextUnfinished()">➡️ Fara á orð sem vantar</button>
+                <div class="feedback-note">
+                    Vinsamlegast sendið ábendingar á <a href="mailto:dgu@fb.is">dgu@fb.is</a>
+                </div>
+            `;
+        }
+        return;
+    }
+
+    const curr = exerciseData[currentIndex];
+    
+    const langSelect = document.getElementById('languageSelect');
+    const selectedLang = langSelect ? langSelect.value : '';
+
+    document.getElementById('target').innerHTML = curr.text;
+    document.getElementById('is-explanation').innerHTML = curr.is_exp;
+    document.getElementById('counter').innerText = `Orð ${currentIndex + 1} af${exerciseData.length}`;
+    
+    if (!selectedLang) {
+        document.getElementById('media-box').innerHTML = "<i>Veldu tungumál úr listanum að ofan til að sjá þýðingu.</i>";
+    } else {
+        // Notum ensku sem varalið ef tungumálið vantar
+        document.getElementById('media-box').innerHTML = curr.translations[selectedLang] || (curr.translations['en'] + "<br><br><i>(Ath: Þýðingu á þessu tungumáli vantar, sýni ensku)</i>");
+    }
+
+    const savedScore = userScores[currentIndex];
+    const savedText = userSpoken[currentIndex];
+
+    if (savedScore !== null) {
+        document.getElementById('result').innerText = `Einkunn: ${savedScore}%`;
+        document.getElementById('spoken').innerText = `Þú sagðir: "${savedText}"`;
+    } else {
+        document.getElementById('result').innerText = "";
+        document.getElementById('spoken').innerText = "";
+    }
+}
+
+function nextExercise() {
+    currentIndex++;
+    updateUI();
+}
+
+function prevExercise() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateUI();
+    }
+}
+
+function toggleRecord() {
+    if (!recognition) return;
+
+    const btn = document.getElementById('record-btn');
+    if (isRecording) {
+        recognition.stop();
+    } else {
+        try {
+            recognition.start();
+            isRecording = true;
+            btn.innerText = "🛑 Hlusta...";
+            btn.classList.add('recording');
+            document.getElementById('result').innerText = "Hlusta...";
+            document.getElementById('spoken').innerText = "";
+        } catch(e) {
+            console.log("Villa í upptöku: " + e);
+        }
+    }
+}
+
+if (recognition) {
+    recognition.onresult = (event) => {
+        let spoken = event.results[0][0].transcript;
+        spoken = spoken.trim().toLowerCase(); 
+
+        document.getElementById('spoken').innerText = `Þú sagðir: "${spoken}"`;
+        
+        const targetWord = exerciseData[currentIndex].text.toLowerCase();
+        
+        let score = (spoken === targetWord) ? 100 : 0;
+        
+        if (spoken.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"").trim() === targetWord) {
+            score = 100;
+        }
+        
+        document.getElementById('result').innerText = `Einkunn: ${score}%`;
+
+        userScores[currentIndex] = score;
+        userSpoken[currentIndex] = spoken;
+        
+        updateProgress();
+
+        if (score === 100) {
+            autoAdvanceTimer = setTimeout(() => {
+                nextExercise();
+            }, 1000); 
+        }
+    };
+}
+
+function downloadCert() {
+    if (hasDownloadedCert) return; 
+
+    const studentNameInput = document.getElementById('studentName');
+    const studentName = studentNameInput ? studentNameInput.value.trim() : "";
+    
+    if (studentName === "") {
+        alert("Vinsamlegast skrifaðu nafnið þitt fyrst!");
+        return;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 900;
+    canvas.height = 600;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.strokeStyle = '#1a73e8';
+    ctx.lineWidth = 15;
+    ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+    ctx.strokeStyle = '#fbbc05';
+    ctx.lineWidth = 5;
+    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+    
+    ctx.fillStyle = '#1a73e8';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 50px Arial';
+    ctx.fillText('Viðurkenning', canvas.width / 2, 140);
+    
+    ctx.fillStyle = '#333333';
+    ctx.font = '24px Arial';
+    ctx.fillText('Þetta skjal staðfestir að', canvas.width / 2, 220);
+    
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 45px Arial';
+    ctx.fillText(studentName, canvas.width / 2, 290);
+    
+    ctx.fillStyle = '#333333';
+    ctx.font = '24px Arial';
+    ctx.fillText('hefur lokið æfingunni með glæsibrag:', canvas.width / 2, 360);
+
+    ctx.fillStyle = '#1a73e8';
+    ctx.font = 'bold 26px Arial';
+    ctx.fillText('Markorð: 171 - 180 algengustu í íslenskum námsbókum', canvas.width / 2, 420);
+    
+    ctx.fillStyle = '#34a853';
+    ctx.font = 'italic 28px Arial';
+    ctx.fillText('Frábær árangur! Haltu áfram að æfa þig.', canvas.width / 2, 490);
+
+    const dateString = new Date().toLocaleDateString('is-IS');
+    ctx.fillStyle = '#666666';
+    ctx.font = '18px Arial';
+    ctx.fillText('Dagsetning: ' + dateString, canvas.width / 2, 540);
+    
+    const link = document.createElement('a');
+    link.download = `Vidurkenning_${studentName.replace(/\s+/g, '_')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    
+    hasDownloadedCert = true;
+    const btn = document.getElementById('cert-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerText = "✅ Skjal sótt";
+        btn.style.backgroundColor = "#5f6368";
+        btn.style.cursor = "not-allowed";
+        btn.style.opacity = "0.7";
+    }
+    if (studentNameInput) {
+        studentNameInput.disabled = true;
+    }
+}
+</script>
+
+</body>
+</html>
